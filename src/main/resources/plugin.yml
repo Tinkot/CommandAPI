@@ -1,0 +1,7 @@
+name: SpigotPlugin
+author: TjeerdVanDijk
+version: 1.0-SNAPSHOT
+main: hypergen.online.spigotplugin.SpigotPlugin
+depend: [ProtocolLib]
+#commands:
+#  ping:
