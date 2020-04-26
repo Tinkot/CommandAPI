@@ -63,6 +63,12 @@
             <version>1.15.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>minecraft-server</artifactId>
+            <version>1.15.2-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- this adds Spigot javadoc -->
         <dependency>
             <groupId>org.spigotmc</groupId>

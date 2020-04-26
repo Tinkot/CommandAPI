@@ -2,7 +2,7 @@ package hypergen.online.spigotplugin.commandbuilder.components;
 
 import hypergen.online.spigotplugin.commandbuilder.implementable.CustomTabListProvider;
 
-public class CustomListComponent implements TabCompleterComponent {
+public class CustomListComponent {
     private final CustomTabListProvider customTabListProvider;
 
     public CustomListComponent(CustomTabListProvider customTabListProvider) {

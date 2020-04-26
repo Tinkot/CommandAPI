@@ -1,6 +1,6 @@
 package hypergen.online.spigotplugin.commandbuilder.components;
 
-public class FixedValueComponent implements TabCompleterComponent {
+public class FixedValueComponent {
     private final String[] values;
 
     public FixedValueComponent(String... values) {

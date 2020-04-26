@@ -7,23 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommandBuilder {
-    private final CommandComponent commandComponent;
-    private final ErrorComponent errorComponent;
-    private List<Argument> argumentList = new ArrayList<>();
+    private final RootComponent root;
 
-    public CommandBuilder(CommandComponent commandComponent, ErrorComponent errorComponent) {
-        this.commandComponent = commandComponent;
-        this.errorComponent = errorComponent;
+    public CommandBuilder(RootComponent root) {
+        this.root = root;
     }
 
-    public Command build(CommandPerformer commandExecutor) {
-        return new Command(commandComponent, errorComponent, argumentList, commandExecutor);
+    public Command build(CommandPerformer commandPerformer) {
+        return new Command(root, commandPerformer);
     }
 
-
-    public CommandBuilder argument(LabelComponent label, TabCompleterComponent tabCompleter, ErrorComponent error) {
-        Argument argument = new Argument(label, tabCompleter, error);
-        argumentList.add(argument);
-        return this;
-    }
 }

@@ -1,31 +1,27 @@
 package hypergen.online.spigotplugin.commandbuilder;
 
 import hypergen.online.spigotplugin.commandbuilder.components.ErrorComponent;
-import hypergen.online.spigotplugin.commandbuilder.components.TabCompleterComponent;
 import hypergen.online.spigotplugin.commandbuilder.components.LabelComponent;
+import hypergen.online.spigotplugin.commandbuilder.components.WhenComponent;
 
 public class Argument {
     private final LabelComponent label;
-    private final TabCompleterComponent tabCompleter;
     private final ErrorComponent error;
+    private final WhenComponent[] whens;
+    public Object addDecision;
 
-    public Argument(LabelComponent label, TabCompleterComponent tabCompleter, ErrorComponent error) {
+    public Argument(LabelComponent label, ErrorComponent error, WhenComponent[] whens) {
         this.label = label;
-        this.tabCompleter = tabCompleter;
         this.error = error;
+        this.whens = whens;
     }
+
 
     public LabelComponent getLabel() {
         return label;
     }
 
-    public TabCompleterComponent getTabCompleter() {
-        return tabCompleter;
-    }
-
     public ErrorComponent getError() {
         return error;
     }
-
-
 }

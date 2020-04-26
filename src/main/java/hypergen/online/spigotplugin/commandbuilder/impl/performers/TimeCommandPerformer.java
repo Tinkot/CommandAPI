@@ -1,6 +1,5 @@
-package hypergen.online.spigotplugin.commandbuilder.impl.executors;
+package hypergen.online.spigotplugin.commandbuilder.impl.performers;
 
-import hypergen.online.spigotplugin.commandbuilder.Argument;
 import hypergen.online.spigotplugin.commandbuilder.implementable.CommandPerformer;
 import hypergen.online.spigotplugin.commandbuilder.implementable.CustomTabListProvider;
 import org.bukkit.command.CommandExecutor;
@@ -9,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import java.util.Arrays;
 import java.util.List;
 
-public class GiveCommandPerformer implements CommandPerformer, CustomTabListProvider {
+public class TimeCommandPerformer implements CommandPerformer, CustomTabListProvider {
     @Override
     public void onCommand(CommandExecutor executor, String[] args) {
 

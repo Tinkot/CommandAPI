@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class PlayerListComponent implements TabCompleterComponent {
+public class PlayerListComponent {
     private final List<String> names;
 
     public PlayerListComponent() {

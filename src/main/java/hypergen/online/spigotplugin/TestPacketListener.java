@@ -43,6 +43,7 @@ public class TestPacketListener extends PacketAdapter {
                         .then(argument("true or false", bool())
                                 .then(argument("a number", integer())
                                         .then(argument("a string", string()))
+                                        .then(argument("a string", list)
 
                                 )
                         )
