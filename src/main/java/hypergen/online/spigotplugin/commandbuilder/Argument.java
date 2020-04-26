@@ -14,4 +14,18 @@ public class Argument {
         this.tabCompleter = tabCompleter;
         this.error = error;
     }
+
+    public LabelComponent getLabel() {
+        return label;
+    }
+
+    public TabCompleterComponent getTabCompleter() {
+        return tabCompleter;
+    }
+
+    public ErrorComponent getError() {
+        return error;
+    }
+
+
 }

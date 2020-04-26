@@ -1,23 +1,23 @@
 package hypergen.online.spigotplugin.commandbuilder;
 
-import hypergen.online.spigotplugin.commandbuilder.codeexpressions.ICommandExecutor;
+import hypergen.online.spigotplugin.commandbuilder.implementable.CommandPerformer;
 import hypergen.online.spigotplugin.commandbuilder.components.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommandBuilder {
-    private final CommandComponent command;
+    private final CommandComponent commandComponent;
     private final ErrorComponent errorComponent;
     private List<Argument> argumentList = new ArrayList<>();
 
-    public CommandBuilder(CommandComponent command, ErrorComponent errorComponent) {
-        this.command = command;
+    public CommandBuilder(CommandComponent commandComponent, ErrorComponent errorComponent) {
+        this.commandComponent = commandComponent;
         this.errorComponent = errorComponent;
     }
 
-    public Command build(Class<? extends ICommandExecutor> commandExecutor) {
-        new Command(command, errorComponent, argumentList, commandExecutor);
+    public Command build(CommandPerformer commandExecutor) {
+        return new Command(commandComponent, errorComponent, argumentList, commandExecutor);
     }
 
 

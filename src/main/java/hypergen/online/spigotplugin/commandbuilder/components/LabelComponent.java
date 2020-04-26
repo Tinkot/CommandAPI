@@ -10,4 +10,9 @@ public class LabelComponent {
     public String getLabel() {
         return label;
     }
+
+    @Override
+    public String toString() {
+        return getLabel();
+    }
 }

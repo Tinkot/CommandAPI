@@ -1,11 +1,8 @@
 package hypergen.online.spigotplugin.commandbuilder;
 
-
-import hypergen.online.spigotplugin.commandbuilder.codeexpressions.ICommandExecutor;
+import hypergen.online.spigotplugin.commandbuilder.implementable.CustomTabListProvider;
 import hypergen.online.spigotplugin.commandbuilder.components.*;
-import hypergen.online.spigotplugin.commandbuilder.impl.executors.GiveCommandExecutor;
-
-import java.util.List;
+import hypergen.online.spigotplugin.commandbuilder.impl.executors.GiveCommandPerformer;
 
 
 public class ComponentBuilder {
@@ -21,8 +18,6 @@ public class ComponentBuilder {
     public static ErrorComponent error(String error) {
         return new ErrorComponent(error);
     }
-
-    public static ExecutorComponent argumentExecutor(Class<? extends ICommandExecutor> argumentExecutorClass) { return new ExecutorComponent(argumentExecutorClass); }
 
     public static TabCompleterComponent playerList() {
         return new PlayerListComponent();
@@ -40,21 +35,19 @@ public class ComponentBuilder {
         return new IntegerComponent(min, max);
     }
 
-    private static TabCompleterComponent flexibleList(List list) { return new FlexibleListComponent(list); }
+    private static TabCompleterComponent customList(CustomTabListProvider customTabListProvider) { return new CustomListComponent(customTabListProvider); }
 
     private static TabCompleterComponent conditionalList() { return null; }
 
-    private static void test() {
+    public void test() {
+        GiveCommandPerformer executor = new GiveCommandPerformer();
         Command command = new CommandBuilder(command("give", "gift"), error("a player must be specified"))
                 .argument(label("player"),  playerList(),                         error("player does not exists."))
                 .argument(label("item"),    fixedList("dirt", "stone"),   error("[<value>] is a incorrect item"))
                 .argument(label("amount"),  integer(0,255),                       error("[<value>] is a not an integer"))
-                .build(GiveCommandExecutor.class)
+                .argument(label("item"),    customList(executor),                 error("[<value>] is a incorrect item"))
+                .build(executor)
                 ;
 //                .argument(label("item"),    flexibleList(null), argumentExecutor(null), error("[<value>] is a incorrect item"))
-//                .argument(label("item"),    conditionalList(null, condition), argumentExecutor(null), error("[<value>] is a incorrect item"))
-    }
-
-    private static int someMethod() { return 1;
     }
 }
