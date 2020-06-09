@@ -2,32 +2,41 @@ package hypergen.online.spigotplugin;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import hypergen.online.configfactory.ConfigFactory;
-import hypergen.online.spigotplugin.commandbuilder.CommandBuilder;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import static com.mojang.brigadier.arguments.BoolArgumentType.bool;
+import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
+import static com.mojang.brigadier.arguments.StringArgumentType.string;
+import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
+import static com.mojang.brigadier.builder.RequiredArgumentBuilder.argument;
+
 public class CommandAPI extends JavaPlugin {
+
+    private BrigadierManager brigadierManager;
+
     @Override
     public void onEnable() {
         ConfigFactory configFactory = ConfigFactory.getInstance();
         Config config = configFactory.getConfig(getDataFolder(), Config.class);
         ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
-        protocolManager.addPacketListener(new TestPacketListener(this));
-//        Bukkit.getServer().getPluginCommand().get
-    }
-
-    private void registerListenerds() {
-        getServer().getPluginManager().registerEvent(new );
+        brigadierManager = new BrigadierManager(this);
+        protocolManager.addPacketListener(brigadierManager);
+        registerCommand();
     }
 
 
-    private void createCommand() {
-        CommandBuilder = new CommandBuilder(command("give","gift"), error("a player must be specified"))
-                .argument(label("players"), players(), error("incorrect player name"))
-                .argument(label("item"),    fixed("dirt", "stone"), code(runnable1), error("[<value>] is a incorrect item"))
-                .argument(label("amount"),  fixed("dirt", "stone"), code(runnable1), error("[<value>] is a incorrect item"));
-
-        registerCommand(CommandBuilder.build(GiveCommandExecutor.class));
+    private void registerCommand() {
+        LiteralArgumentBuilder command = literal("foo")
+                .then(argument("text here", string())
+                        .then(argument("true or false", bool())
+                                .then(argument("a number", integer())
+                                        .then(argument("a string", string()))
+                                )
+                        )
+                );
+        brigadierManager.registerBrigadierCommand(command);
     }
 }
 

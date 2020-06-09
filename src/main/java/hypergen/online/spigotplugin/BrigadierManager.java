@@ -14,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,34 +27,24 @@ import static com.mojang.brigadier.arguments.StringArgumentType.*;
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.*;
 import static com.mojang.brigadier.builder.RequiredArgumentBuilder.*;
 
-public class TestPacketListener extends PacketAdapter {
+public class BrigadierManager extends PacketAdapter {
 
-    public TestPacketListener(JavaPlugin plugin) {
+    private static List<LiteralArgumentBuilder<Object>> commands = new ArrayList<>();
+
+    public BrigadierManager(JavaPlugin plugin) {
         super(plugin, PacketType.Play.Server.COMMANDS);
     }
 
     @Override
     public void onPacketSending(PacketEvent event) {
-        register(event, createCommand());
-    }
-
-    private LiteralArgumentBuilder<Object> createCommand() {
-        return literal("foo")
-                .then(argument("text here", string())
-                        .then(argument("true or false", bool())
-                                .then(argument("a number", integer())
-                                        .then(argument("a string", string()))
-
-                                )
-                        )
-                );
-    }
-
-    private LiteralCommandNode register(PacketEvent event, LiteralArgumentBuilder command) {
-        LiteralCommandNode build = command.build();
         RootCommandNode rootCommandNode = getRootCommandNode(event);
-        rootCommandNode.addChild(command.build());
-        return build;
+        for (LiteralArgumentBuilder command : commands) {
+            rootCommandNode.addChild(command.build());
+        }
+    }
+
+    public void registerBrigadierCommand(LiteralArgumentBuilder<Object> command) {
+        commands.add(command);
     }
 
 
@@ -61,7 +52,7 @@ public class TestPacketListener extends PacketAdapter {
         final StructureModifier<RootCommandNode> data = event.getPacket().getSpecificModifier(RootCommandNode.class);
         List<RootCommandNode> rootCommandNode = data.getValues();
         // Only one field should ever exist in the nms class net.minecraft.server.v1_15_R1.PacketPlayOutCommands
-        // so it is fine to iterate and directly return;
+        // so it is fine to iterate and directly return.
         for (RootCommandNode<Object> value : rootCommandNode) {
             return value;
         }
